@@ -46,6 +46,11 @@ public class MysqlDB
 
 	}
 	
+	public void select()
+	{
+		
+	}
+	
 	
 	public void disconnect() throws SQLException 
     {

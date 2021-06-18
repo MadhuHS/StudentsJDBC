@@ -3,6 +3,7 @@ package com.jspiders.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -32,7 +33,7 @@ public class MysqlDB
 		  
 		  PreparedStatement psm =  con.prepareStatement(insertQuery);
 		 
-		  psm.setInt(1,std.getId());
+		  psm.setInt(1,0);
 		  psm.setString(2,std.getName());
 		  psm.setString(3,std.getEmail());
 		  psm.setString(4,std.getMob());
@@ -46,9 +47,37 @@ public class MysqlDB
 
 	}
 	
-	public void select()
+	public Student selectByEmail(String email)throws SQLException
 	{
+		String selectQuery = "select * from StudentsDB.Student where email = ?";
+		getDBConnection("StudentsDB");
 		
+		PreparedStatement psm = con.prepareStatement(selectQuery);
+		psm.setString(1, email);
+		
+		ResultSet rs = psm.executeQuery();//exectute Select query and copy the result to ResultSet
+		rs.next();//move the cursor to first record/row
+		
+		String  name   = rs.getString("name");
+		String  sEmail = rs.getString("email");
+		String  mob    = rs.getString("mob");
+		
+		Student std = new Student(name,sEmail,mob);
+		return std;
+	}
+	
+	public int updateEmail(String email)
+	{
+		int count = 0;
+		
+		return count;
+	}
+	
+	public int deleteByEmail(String email)
+	{
+		int count = 0;
+		
+		return count;
 	}
 	
 	

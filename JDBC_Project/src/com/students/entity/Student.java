@@ -11,9 +11,8 @@ public class Student {
 		super();
 	}
 
-	public Student(Integer id, String name, String email, String mob) {
+	public Student(String name, String email, String mob) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.mob = mob;
@@ -49,6 +48,11 @@ public class Student {
 
 	public void setMob(String mob) {
 		this.mob = mob;
+	}
+
+	@Override
+	public String toString() {
+		return "name : " + name + " email : " + email + " mob : " + mob;
 	}
 
 }

@@ -18,6 +18,13 @@ public class StudentDaoImpl implements StudentDAO
 		   System.out.println(std.getName()+" was created");
 	   }
 	}
+	
+	@Override
+	public Student getStudentByEmai(String email) throws SQLException 
+	{
+		Student std= db.selectByEmail(email);
+		return std;
+	}
 
 	@Override
 	public void getStudentById(Integer id)
@@ -42,4 +49,6 @@ public class StudentDaoImpl implements StudentDAO
 	{
 		
 	}
+
+	
 }

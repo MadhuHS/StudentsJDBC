@@ -60,6 +60,22 @@ public class Mainclass
 	
 	public static void menu()
 	{
+		System.out.println("1.To open the app");
+		System.out.println("2. To exit");
+		
+		int choice = scn.nextInt(); 
+		
+		if(choice == 1)
+		{ 
+		 try 
+		 {
+			sdi.openApp();
+			System.out.println("Application is now open");
+		 } 
+		 catch (SQLException e1)
+		 {
+			e1.printStackTrace();
+		 }
 		 while(true)
 		 {
 		 
@@ -80,21 +96,56 @@ public class Mainclass
 		    case 2  : viewStudent(); 
                       break;
                       
-		    default : System.out.println("Thank you see you again"); 
+		    case 3  : updateEmail(); 
+                      break;
+                      
+		    default : try {
+				           sdi.closeApp();
+			              } 
+		                  catch (SQLException e) 
+		                  {
+				          e.printStackTrace();
+			              }
+		    
+		    	      System.out.println("Thank you see you again"); 
 		    	      System.exit(0);//stop the application         
 		 }
 		 
 		 }
+		}
+		else
+		{
+			 System.out.println("Thank you see you again"); 
+   	         System.exit(0);//stop the application 
+		}
   
 	}
 	
+	public static void updateEmail() 
+	{
+	   System.out.println("enter your current email id");
+       String curEmail = scn.next();
+       
+	   System.out.println("enter your NEW email id");
+       String newEmail = scn.next();
+       
+       try 
+       {   
+		sdi.updateStudentEmail(curEmail, newEmail);
+		System.out.println("Email id changed successfully!!");
+	   } 
+       catch (SQLException e)
+       {
+		 System.out.println("Oops!! "+e.getMessage());
+	   }
+	}
+
 	public static void main(String[] args) 
 	{
 		  System.out.println("Main starts...");
 		  
 		  menu();
 		  
-		
 		  System.out.println("Main ends...");
 
 	}

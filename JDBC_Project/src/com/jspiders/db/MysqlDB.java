@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.students.entity.Student;
 
@@ -15,21 +14,20 @@ public class MysqlDB
 	private final String username = "root";
 	private final String password = "root";
 	private Connection con = null;//SingleTon 
+	
+	private final String schemaName = "StudentsDB";
     
-	public Connection getDBConnection(String schemaName) throws SQLException
+	public void setDBConnection() throws SQLException
     {
 		 if(con == null)
 		 {
 		  con = DriverManager.getConnection(dbUrl+schemaName,username,password);	
-		  System.out.println("Connection open"); 
 		 } 
-		 return con;
     }
 	
 	public int insert(Student std) throws SQLException
 	{
 		  String insertQuery = "insert into StudentsDB.Student values(?,?,?,?);";	
-		  getDBConnection("StudentsDB");
 		  
 		  PreparedStatement psm =  con.prepareStatement(insertQuery);
 		 
@@ -50,7 +48,6 @@ public class MysqlDB
 	public Student selectByEmail(String email)throws SQLException
 	{
 		String selectQuery = "select * from StudentsDB.Student where email = ?";
-		getDBConnection("StudentsDB");
 		
 		PreparedStatement psm = con.prepareStatement(selectQuery);
 		psm.setString(1, email);
@@ -66,11 +63,21 @@ public class MysqlDB
 		return std;
 	}
 	
-	public int updateEmail(String email)
-	{
-		int count = 0;
+	public void updateEmail(String curEmail,String newEmail) throws SQLException
+	{		
+		String updateQuery = "update StudentsDB.Student set email = ?  where email = ?";
 		
-		return count;
+		PreparedStatement psm = con.prepareStatement(updateQuery);
+		psm.setString(1, newEmail);
+		psm.setString(2, curEmail);
+		
+		int count = psm.executeUpdate();
+		
+		if(count==0)
+		{
+			SQLException sqlex = new SQLException("email id do not exist");
+			throw sqlex;
+		}
 	}
 	
 	public int deleteByEmail(String email)
@@ -83,9 +90,7 @@ public class MysqlDB
 	
 	public void disconnect() throws SQLException 
     {
-		con.close();
-		  System.out.println("Connection closed"); 
-
+		  con.close();
     }
 	
 	

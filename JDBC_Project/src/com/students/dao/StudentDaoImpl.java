@@ -52,9 +52,10 @@ public class StudentDaoImpl implements StudentDAO
 	}
 
 	@Override
-	public void getAllStudents()
+	public Student[] getAllStudents() throws SQLException
 	{
-		//will be done in class
+		Student[] students = db.selectAll();
+		return students;
 	}
 
 	@Override

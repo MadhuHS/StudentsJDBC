@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.students.entity.Student;
 
@@ -83,16 +84,17 @@ public class MysqlDB {
 		con.close();
 	}
 
-	public Student[] selectAll() throws SQLException
+	/*public Student[] selectAll() throws SQLException
 	{
 	    psm = con.prepareStatement(countRecords);
-		ResultSet rs = psm.executeQuery();
+	    ResultSet rs = psm.executeQuery();
 		rs.next();// move the cursor to first record/row
 		int count = rs.getInt(1);
-				
+						
 		Student[] students = new Student[count];//students array
         
 		psm = con.prepareStatement(selectQuery);
+		
 		ResultSet studentsResultSet = psm.executeQuery();
 		
 		for (int i = 0; i <= students.length-1; i++)
@@ -106,9 +108,36 @@ public class MysqlDB {
 		}
 
 		return students;
+	}*/
+	
+	public ArrayList<Student> selectAll() throws SQLException
+	{
+        ArrayList<Student> studentList = new ArrayList<Student>();//students List
+        
+		psm = con.prepareStatement(selectQuery);
+		
+		ResultSet studentsResultSet = psm.executeQuery();
+		
+		while(studentsResultSet.next())
+		{
+			String name = studentsResultSet.getString("name");
+			String email =studentsResultSet.getString("email");
+			String mob = studentsResultSet.getString("mob");
+			Student sdt = new Student(name,email,mob);
+			
+			studentList.add(sdt);//insert
+		}
+
+		return studentList;
 	}
-
 }
-
+/*
+ *next() Moves the cursor forward one row from its current position.
+ * A ResultSet cursor is initially positioned before the first row; 
+ * the first call to the method next makes the first row the current row;
+ *  the second call makes the second row the current row, and so on.
+ * When a call to the next method returns false,if the cursor is positioned after the last row
+*/
+ 
 
 

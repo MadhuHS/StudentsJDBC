@@ -4,9 +4,12 @@ import java.sql.SQLException;
 
 import com.students.dao.StudentDaoImpl;
 import com.students.entity.Student;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Mainclass {
+public class Mainclass 
+{
 	static final Scanner scn = new Scanner(System.in);
 	static final StudentDaoImpl sdi = new StudentDaoImpl();
 
@@ -128,10 +131,11 @@ public class Mainclass {
 
 	public static void showAllStudents() {
 		try {
-			Student[] students = sdi.getAllStudents();
+			ArrayList<Student> studentsList = sdi.getAllStudents();
 
-			for (int i = 0; i < students.length; i++) {
-				System.out.println(students[i]);
+			for (int i = 0; i < studentsList.size()-1; i++)
+			{
+				System.out.println(studentsList.get(i));
 			}
 
 		} catch (SQLException e) {
@@ -142,7 +146,18 @@ public class Mainclass {
 	public static void main(String[] args) {
 		System.out.println("Main starts...");
 
-		menu();
+		//menu();
+		try
+		{
+		 sdi.openApp();
+		 showAllStudents();
+		 sdi.closeApp();
+		}
+		catch (SQLException e)
+		{
+           e.printStackTrace();
+		}
+
 
 		System.out.println("Main ends...");
 

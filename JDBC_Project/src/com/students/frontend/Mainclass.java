@@ -1,12 +1,11 @@
 package com.students.frontend;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Scanner;
 
 import com.students.dao.StudentDaoImpl;
 import com.students.entity.Student;
-
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Mainclass 
 {
@@ -130,8 +129,9 @@ public class Mainclass
 	}
 
 	public static void showAllStudents() {
-		try {
-			ArrayList<Student> studentsList = sdi.getAllStudents();
+		try 
+		{
+			List<Student> studentsList = sdi.getAllStudents();
 
 			for (int i = 0; i < studentsList.size()-1; i++)
 			{

@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
 
 import com.students.entity.Student;
 
@@ -110,9 +113,9 @@ public class MysqlDB {
 		return students;
 	}*/
 	
-	public ArrayList<Student> selectAll() throws SQLException
+	public List<Student> selectAll() throws SQLException
 	{
-        ArrayList<Student> studentList = new ArrayList<Student>();//students List
+        List<Student> studentList = new ArrayList<Student>();//students List
         
 		psm = con.prepareStatement(selectQuery);
 		

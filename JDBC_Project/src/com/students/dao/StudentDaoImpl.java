@@ -2,6 +2,7 @@ package com.students.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.jspiders.db.MysqlDB;
 import com.students.entity.Student;
@@ -53,9 +54,9 @@ public class StudentDaoImpl implements StudentDAO
 	}
 
 	@Override
-	public ArrayList<Student> getAllStudents() throws SQLException
+	public List<Student> getAllStudents() throws SQLException
 	{
-		ArrayList<Student> studentList = db.selectAll();
+		List<Student> studentList = db.selectAll();
 		return studentList;
 	}
 

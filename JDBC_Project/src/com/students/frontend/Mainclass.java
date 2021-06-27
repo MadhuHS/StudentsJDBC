@@ -1,8 +1,11 @@
 package com.students.frontend;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.students.dao.StudentDaoImpl;
 import com.students.entity.Student;
@@ -32,6 +35,47 @@ public class Mainclass
 			System.out.println("OOPS!!! Error while adding " + std.getName());
 			System.out.println();
 
+		}
+	}
+	
+	public static void addMultipleStudents() 
+	{
+		Set<Student> studentSet = new HashSet<Student>();
+		boolean end = false;
+		
+		while(end == false)
+		{
+		// add student
+		System.out.println("enter name");
+		String name = scn.next();
+
+		System.out.println("enter email");
+		String email = scn.next();
+
+		System.out.println("enter mobile no");
+		String mob = scn.next();
+
+		Student std = new Student(name, email, mob);
+		
+		studentSet.add(std);
+		
+		System.out.println("Do u want to add more students Y/N");
+        String opt = scn.next();
+        
+        if(opt.equalsIgnoreCase("N"))
+        {
+		 end=true;
+		}
+		}
+      
+		try 
+		{
+			System.out.println(studentSet);
+			sdi.createMultipleStudents(studentSet);
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
 		}
 	}
 
@@ -68,6 +112,7 @@ public class Mainclass
 				System.out.println("4. update student email");
 				System.out.println("5. update student mob");
 				System.out.println("6. delete student");
+				System.out.println("7. add mutiple students");
 				System.out.println("Any other key to exit");
 
 				int optn = scn.nextInt();
@@ -147,17 +192,9 @@ public class Mainclass
 		System.out.println("Main starts...");
 
 		//menu();
-		try
-		{
-		 sdi.openApp();
-		 showAllStudents();
-		 sdi.closeApp();
-		}
-		catch (SQLException e)
-		{
-           e.printStackTrace();
-		}
-
+		
+		 addMultipleStudents();
+		
 
 		System.out.println("Main ends...");
 

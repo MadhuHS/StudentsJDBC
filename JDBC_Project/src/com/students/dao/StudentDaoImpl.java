@@ -1,8 +1,8 @@
 package com.students.dao;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.jspiders.db.MysqlDB;
 import com.students.entity.Student;
@@ -25,6 +25,12 @@ public class StudentDaoImpl implements StudentDAO
 	   {
 		   System.out.println(std.getName()+" was created");
 	   }
+	}
+	
+	@Override
+	public void createMultipleStudents(Set<Student> studentList) throws SQLException 
+	{
+		
 	}
 	
 	@Override
@@ -65,6 +71,5 @@ public class StudentDaoImpl implements StudentDAO
 	{
 		db.disconnect();		
 	}
-
 	
 }

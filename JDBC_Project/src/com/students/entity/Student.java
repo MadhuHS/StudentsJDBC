@@ -56,13 +56,13 @@ public class Student {
 	}
 	
 	
-	@Override
-	public int hashCode()
-	{
-		int mob = Integer.parseInt(getMob());
-		return mob;
-	}
-	
+    @Override
+    public int hashCode() 
+    {
+    	int h1 = Integer.parseInt(mob);
+    	return h1;
+    }
+    
 	@Override
 	public boolean equals(Object obj) 
 	{
@@ -72,11 +72,9 @@ public class Student {
 		
 		String s1Mob = s1.getMob();
 		String s2Mob = this.getMob();
+
 		
-		System.out.println(s1Email+" == "+s2Email);
-		System.out.println(s1Mob+" == "+s2Mob);
-		
-		if(s1Email.equalsIgnoreCase(s2Email) || s1Mob.equalsIgnoreCase(s2Mob))
+		if(s1Email.equalsIgnoreCase(s2Email) && s1Mob.equalsIgnoreCase(s2Mob))
 		{
 			return true;//if they are same
 		}

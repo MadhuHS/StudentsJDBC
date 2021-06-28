@@ -28,9 +28,9 @@ public class StudentDaoImpl implements StudentDAO
 	}
 	
 	@Override
-	public void createMultipleStudents(Set<Student> studentList) throws SQLException 
+	public void createMultipleStudents(Set<Student> studentSet) throws SQLException 
 	{
-		
+		db.insertMultiple(studentSet);
 	}
 	
 	@Override

@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+import java.util.Set;
 
 import com.students.entity.Student;
 
@@ -20,6 +20,7 @@ public class MysqlDB {
 	private PreparedStatement psm = null;
 	
 	private final String insertQuery = "insert into StudentsDB.Student values(?,?,?,?);";
+	private  String insertMultipleQuery = "insert into StudentsDB.Student values(?,?,?,?);";
 	private final String selectByEmailQuery = "select * from StudentsDB.Student where email = ?";
 	private final String updateQuery = "update StudentsDB.Student set email = ?  where email = ?";
 	private final String selectQuery  = "select * from StudentsDB.Student;";
@@ -43,6 +44,38 @@ public class MysqlDB {
 		psm.setString(4, std.getMob());
 
 		int count = psm.executeUpdate();
+		return count;
+
+	}
+	
+	public int insertMultiple(Set<Student> studentSet) throws SQLException
+	{
+		int count = 0;
+		
+		for(Student std : studentSet)
+		{
+	      psm = con.prepareStatement(insertQuery);
+	      psm.setInt(1, 0);
+		  psm.setString(2, std.getName());
+		  psm.setString(3, std.getEmail());
+		  psm.setString(4, std.getMob());
+		  psm.executeUpdate();
+		  count++;
+		}
+		
+		/*Iterator<Student> i1 = studentSet.iterator();
+		while(i1.hasNext())
+		{
+			  Student std = i1.next();
+			  psm = con.prepareStatement(insertQuery);
+		      psm.setInt(1, 0);
+			  psm.setString(2, std.getName());
+			  psm.setString(3, std.getEmail());
+			  psm.setString(4, std.getMob());
+			  psm.executeUpdate();
+			  count++;
+		}*/
+		
 		return count;
 
 	}

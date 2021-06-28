@@ -10,8 +10,7 @@ import java.util.Set;
 import com.students.dao.StudentDaoImpl;
 import com.students.entity.Student;
 
-public class Mainclass 
-{
+public class Mainclass {
 	static final Scanner scn = new Scanner(System.in);
 	static final StudentDaoImpl sdi = new StudentDaoImpl();
 
@@ -37,44 +36,38 @@ public class Mainclass
 
 		}
 	}
-	
-	public static void addMultipleStudents() 
-	{
+
+	public static void addMultipleStudents() {
 		Set<Student> studentSet = new HashSet<Student>();
 		boolean end = false;
-		
-		while(end == false)
-		{
-		// add student
-		System.out.println("enter name");
-		String name = scn.next();
 
-		System.out.println("enter email");
-		String email = scn.next();
+		while (end == false) {
+			// add student
+			System.out.println("enter name");
+			String name = scn.next();
 
-		System.out.println("enter mobile no");
-		String mob = scn.next();
+			System.out.println("enter email");
+			String email = scn.next();
 
-		Student std = new Student(name, email, mob);
-		
-		studentSet.add(std);
-		
-		System.out.println("Do u want to add more students Y/N");
-        String opt = scn.next();
-        
-        if(opt.equalsIgnoreCase("N"))
-        {
-		 end=true;
+			System.out.println("enter mobile no");
+			String mob = scn.next();
+
+			Student std = new Student(name, email, mob);
+
+			studentSet.add(std);
+
+			System.out.println("Do u want to add more students Y/N");
+			String opt = scn.next();
+
+			if (opt.equalsIgnoreCase("N")) {
+				end = true;
+			}
 		}
-		}
-      
-		try 
-		{
+
+		try {
 			System.out.println(studentSet);
 			sdi.createMultipleStudents(studentSet);
-		} 
-		catch (SQLException e)
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -133,12 +126,11 @@ public class Mainclass
 				case 4:
 					updateEmail();
 					break;
-				
+
 				case 5:
 					updateEmail();
 					break;
-					
-				
+
 				default:
 					try {
 						sdi.closeApp();
@@ -174,12 +166,10 @@ public class Mainclass
 	}
 
 	public static void showAllStudents() {
-		try 
-		{
+		try {
 			List<Student> studentsList = sdi.getAllStudents();
 
-			for (int i = 0; i < studentsList.size()-1; i++)
-			{
+			for (int i = 0; i <= studentsList.size() - 1; i++) {
 				System.out.println(studentsList.get(i));
 			}
 
@@ -191,10 +181,16 @@ public class Mainclass
 	public static void main(String[] args) {
 		System.out.println("Main starts...");
 
-		//menu();
-		
-		 addMultipleStudents();
-		
+		// menu();
+		try 
+		{
+			sdi.openApp();
+			addMultipleStudents();
+			showAllStudents();
+			sdi.closeApp();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		System.out.println("Main ends...");
 

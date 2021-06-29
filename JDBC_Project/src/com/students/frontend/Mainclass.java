@@ -1,11 +1,10 @@
 package com.students.frontend;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.students.dao.StudentDaoImpl;
 import com.students.entity.Student;
@@ -38,7 +37,7 @@ public class Mainclass {
 	}
 
 	public static void addMultipleStudents() {
-		Set<Student> studentSet = new HashSet<Student>();
+		Set<Student> studentSet = new TreeSet<Student>();
 		boolean end = false;
 
 		while (end == false) {

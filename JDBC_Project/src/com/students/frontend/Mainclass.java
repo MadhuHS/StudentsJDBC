@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.jspiders.students.utils.StudentNameComparator;
 import com.students.dao.StudentDaoImpl;
 import com.students.entity.Student;
 
@@ -165,14 +166,30 @@ public class Mainclass {
 	}
 
 	public static void showAllStudents() {
-		try {
+		try 
+		{
 			List<Student> studentsList = sdi.getAllStudents();
+			
+			StudentNameComparator cmp = new StudentNameComparator();
+			
+			TreeSet<Student> sortedStudents = new TreeSet<Student>(cmp);
+			
+			sortedStudents.addAll(studentsList);
+			
 
-			for (int i = 0; i <= studentsList.size() - 1; i++) {
+			/*for (int i = 0; i <= studentsList.size() - 1; i++)
+			{
 				System.out.println(studentsList.get(i));
+			}*/
+			
+			for(Student std : sortedStudents)
+			{
+				System.out.println(std);
 			}
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -184,7 +201,6 @@ public class Mainclass {
 		try 
 		{
 			sdi.openApp();
-			addMultipleStudents();
 			showAllStudents();
 			sdi.closeApp();
 		} catch (Exception e) {

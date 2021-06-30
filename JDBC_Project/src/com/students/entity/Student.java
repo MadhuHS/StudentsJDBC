@@ -2,7 +2,7 @@ package com.students.entity;
 
 
 //Entity
-public class Student{
+public class Student implements Comparable<Student> {
 	private Integer id;
 	private String name;
 	private String email;
@@ -57,6 +57,36 @@ public class Student{
 	}
 	
 	
+	@Override
+	public int compareTo(Student std)
+	{
+		String s1Name = std.getName();
+		String s2Name = this.getName();
+		
+		String s1Mob = std.getMob();
+		String s2Mob = this.getMob();
+		
+		String s1Email = std.getEmail();
+		String s2Email = this.getEmail();
+		
+		int res;
+		
+		if(s1Email.equalsIgnoreCase(s2Email) || s1Mob.equalsIgnoreCase(s2Mob))
+		{
+			return 0;//reject
+		}
+		
+		if(s1Name.equalsIgnoreCase(s2Name) == true)
+		{
+			res = s1Mob.compareTo(s2Mob);
+		}
+		else
+		{
+			res = s1Name.compareTo(s2Name);
+		}
+		
+		return res;
+	}
 
 }
 

@@ -1,11 +1,14 @@
 package com.students.frontend;
 
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.jspiders.students.utils.StudentEmailComparator;
+import com.jspiders.students.utils.StudentMobComparator;
 import com.jspiders.students.utils.StudentNameComparator;
 import com.students.dao.StudentDaoImpl;
 import com.students.entity.Student;
@@ -166,30 +169,46 @@ public class Mainclass {
 	}
 
 	public static void showAllStudents() {
-		try 
-		{
+		try {
 			List<Student> studentsList = sdi.getAllStudents();
-			
-			StudentNameComparator cmp = new StudentNameComparator();
-			
-			TreeSet<Student> sortedStudents = new TreeSet<Student>(cmp);
-			
-			sortedStudents.addAll(studentsList);
-			
 
-			/*for (int i = 0; i <= studentsList.size() - 1; i++)
-			{
-				System.out.println(studentsList.get(i));
-			}*/
-			
-			for(Student std : sortedStudents)
-			{
+			System.out.println("View data in Sorted By ");
+			System.out.println("1.Name");
+			System.out.println("2.Email");
+			System.out.println("3.Mob");
+
+			String optn = scn.next();
+			Comparator<Student> comp = null;
+
+			switch (optn) {
+			case "1":
+				comp = new StudentNameComparator();
+				break;
+			case "2":
+				comp = new StudentEmailComparator();
+				break;
+			case "3":
+				comp = new StudentMobComparator();
+				break;
+
+			default:
+				comp = new StudentNameComparator();
+			}
+
+			TreeSet<Student> sortedStudents = new TreeSet<Student>(comp);
+
+			sortedStudents.addAll(studentsList);
+
+			/*
+			 * for (int i = 0; i <= studentsList.size() - 1; i++) {
+			 * System.out.println(studentsList.get(i)); }
+			 */
+
+			for (Student std : sortedStudents) {
 				System.out.println(std);
 			}
 
-		}
-		catch (SQLException e)
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -198,8 +217,7 @@ public class Mainclass {
 		System.out.println("Main starts...");
 
 		// menu();
-		try 
-		{
+		try {
 			sdi.openApp();
 			showAllStudents();
 			sdi.closeApp();

@@ -216,14 +216,8 @@ public class Mainclass {
 	public static void main(String[] args) {
 		System.out.println("Main starts...");
 
-		// menu();
-		try {
-			sdi.openApp();
-			showAllStudents();
-			sdi.closeApp();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		menu();
+		
 
 		System.out.println("Main ends...");
 

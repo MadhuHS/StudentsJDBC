@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +26,8 @@ public class MysqlDB {
 	private final String updateQuery = "update StudentsDB.Student set email = ?  where email = ?";
 	private final String selectQuery  = "select * from StudentsDB.Student;";
 	private final String countRecords = "select count(*) from StudentsDB.Student;";
+	
+	private HashMap<String, Student> cache = new HashMap<String, Student>();
 
 
 	private final String schemaName = "StudentsDB";
@@ -44,6 +47,7 @@ public class MysqlDB {
 		psm.setString(4, std.getMob());
 
 		int count = psm.executeUpdate();
+		cache.put(std.getEmail(), std);//insert to cache
 		return count;
 
 	}
@@ -80,8 +84,24 @@ public class MysqlDB {
 
 	}
 
-	public Student selectByEmail(String email) throws SQLException {
-
+	public Student selectByEmail(String email) throws SQLException
+	{
+		Student std = null;
+		
+		//first check in the cache
+		if(cache.size()!= 0)
+		{
+			System.out.println("checking cache");
+			std = cache.get(email);
+			if(std != null)
+			{
+				System.out.println("student found in cache");
+				return std;
+			}
+		}
+		
+		System.out.println("cache is empty searching db");
+		
 		psm = con.prepareStatement(selectByEmailQuery);
 		psm.setString(1, email);
 
@@ -92,7 +112,7 @@ public class MysqlDB {
 		String sEmail = rs.getString("email");
 		String mob = rs.getString("mob");
 
-		Student std = new Student(name, sEmail, mob);
+		std = new Student(name, sEmail, mob);
 		return std;
 	}
 
@@ -159,9 +179,11 @@ public class MysqlDB {
 			String name = studentsResultSet.getString("name");
 			String email =studentsResultSet.getString("email");
 			String mob = studentsResultSet.getString("mob");
+			
 			Student sdt = new Student(name,email,mob);
 			
 			studentList.add(sdt);//insert
+			cache.put(email, sdt);//insert to cache
 		}
 
 		return studentList;
